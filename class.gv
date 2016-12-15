@@ -28,52 +28,7 @@ digraph g {
     DOMNode [
         label = "{Node|\l|\l}"
     ]
-/*    
-    ElementNode [
-        label = "{ElementNode|\l|\l}"
-    ]
-    
-    TextNode [
-        label = "{TextNode|\l|\l}"
-    ]
-    
-    CDataSectionNode [
-        label = "{CDataSectionNode|\l|\l}"
-    ]
-    
-    ProcessingInstructionNode [
-        label = "{ProcessingInstructionNode|\l|\l}"
-    ]
-    
-    CommentNode [
-        label = "{CommentNode|\l|\l}"
-    ]
-    
-    DocumentNode [
-        label = "{DocumentNode|\l|\l}"
-    ]
-    
-    DocumentTypeNode [
-        label = "{DocumentTypeNode|\l|\l}"
-    ]
-    
-    DocumentFragmentNode [
-        label = "{DocumentFragmentNode|\l|\l}"
-    ]
-    
-    edge [
-        arrowhead = "empty"
-    ]
-    
-    ElementNode -> DOMNode
-    TextNode -> DOMNode
-    CDataSectionNode -> DOMNode
-    ProcessingInstructionNode -> DOMNode
-    CommentNode -> DOMNode
-    DocumentNode -> DOMNode
-    DocumentTypeNode -> DOMNode
-    DocumentFragmentNode -> DOMNode
-*/
+
     edge [
         arrowhead = "ediamond"
         
