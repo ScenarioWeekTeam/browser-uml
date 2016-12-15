@@ -53,7 +53,7 @@ digraph g {
     ]
     
     SyntaxAnalyser [
-        label = "{Syntax Analyser|\l|\l}"
+        label = "{SyntaxAnalyser|\l|\l}"
     ]
     
     edge [
