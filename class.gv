@@ -28,7 +28,7 @@ digraph g {
     DOMNode [
         label = "{Node|\l|\l}"
     ]
-    
+/*    
     ElementNode [
         label = "{ElementNode|\l|\l}"
     ]
@@ -73,7 +73,7 @@ digraph g {
     DocumentNode -> DOMNode
     DocumentTypeNode -> DOMNode
     DocumentFragmentNode -> DOMNode
-    
+*/
     edge [
         arrowhead = "ediamond"
         
@@ -168,6 +168,10 @@ digraph g {
         label = "{FileSystem|\l|\l}"
     ]
     
+    CookieStorage [
+        label = "{CookieStorage|\l|\l}"
+    ]
+    
     edge [
         arrowhead = "ediamond"
         
@@ -179,6 +183,7 @@ digraph g {
     IndexedDB -> PersistentStorage
     WebSQL -> PersistentStorage
     FileSystem -> PersistentStorage
+    CookieStorage -> PersistentStorage
 
     Browser [
         label = "{Browser|\l|\l}"
