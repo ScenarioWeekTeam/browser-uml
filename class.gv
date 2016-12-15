@@ -179,4 +179,126 @@ digraph g {
     IndexedDB -> PersistentStorage
     WebSQL -> PersistentStorage
     FileSystem -> PersistentStorage
+
+    Browser [
+        label = "{Browser|\l|\l}"
+    ]
+    
+    UserInterface [
+        label = "{UserInterface|\l|\l}"
+    ]
+    
+    Tab [
+        label = "{Tab|\l|\l}"
+    ]
+    
+    edge [
+        arrowhead = "ediamond"
+        
+        headlabel = "1 "
+        taillabel = "0..*"
+    ]
+    
+    Tab -> Browser
+    
+    edge [
+        arrowhead = "open"
+        
+        headlabel = "1 "
+        taillabel = "1 "
+    ]
+    
+    Browser -> UserInterface
+    
+    HTTPClient [
+        label = "{HTTPClient|\l|\l}"
+    ]
+    
+    HTTPObject [
+        label = "{HTTPObject|\l|\l}"
+    ]
+    
+    edge [
+        arrowhead = "ediamond"
+        
+        headlabel = "1 "
+        taillabel = "0..*"
+    ]
+    
+    HTTPClient -> Tab
+    HTTPObject -> Tab
+    
+    edge [
+        arrowhead = "open"
+        
+        headlabel = "* "
+        taillabel = "1 "
+    ]
+    
+    HTTPClient -> HTTPObject
+    
+    edge [
+        arrowhead = "ediamond"
+        
+        headlabel = "1 "
+        taillabel = "1 "
+    ]
+    
+    DOM -> Tab
+    PersistentStorage -> Browser
+    
+    edge [
+        arrowhead = "ediamond"
+        
+        headlabel = "1 "
+        taillabel = "0..* "
+    ]
+    
+    StyleSheet -> Tab
+    
+    ViewPort [
+        label = "{ViewPort|\l|\l}"
+    ]
+    
+    Render [
+        label = "{Render|\l|\l}"
+    ]
+    
+    Style [
+        label = "{Style|\l|\l}"
+    ]
+    
+    RenderingEngine [
+        label = "{RenderingEngine|\l|\l}"
+    ]
+    
+    CSSRuleTree [
+        label = "{CSSRuleTree|\l|\l}"
+    ]
+    
+    edge [
+        arrowhead = "ediamond"
+        
+        headlabel = "1 "
+        taillabel = "1 "
+    ]
+    
+    RenderingEngine -> Tab
+    ViewPort -> RenderingEngine
+    Style -> ViewPort
+    DOMNode -> ViewPort
+    Style -> Render
+    DOMNode -> Render
+    CSSRuleTree -> RenderingEngine
+    
+    edge [
+        arrowhead = "ediamond"
+        
+        headlabel = "1 "
+        taillabel = "0..* "
+    ]
+    
+    Render -> ViewPort
+    Render -> Render
+    CSSRuleTree -> CSSRuleTree
 }
