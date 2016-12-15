@@ -130,12 +130,12 @@ digraph g {
     Selector -> CSSRule
     Declaration -> CSSRule
     
-    LexicalAnalyser [
-        label = "{LexicalAnalyser|\l|\l}"
+    CSSLexicalAnalyser [
+        label = "{CSSLexicalAnalyser|\l|\l}"
     ]
     
-    SyntaxAnalyser [
-        label = "{SyntaxAnalyser|\l|\l}"
+    CSSSyntaxAnalyser [
+        label = "{CSSSyntaxAnalyser|\l|\l}"
     ]
     
     edge [
@@ -145,8 +145,8 @@ digraph g {
         taillabel = "1 "
     ]
     
-    StyleSheet -> LexicalAnalyser
-    StyleSheet -> SyntaxAnalyser
+    StyleSheet -> CSSLexicalAnalyser
+    StyleSheet -> CSSSyntaxAnalyser
 
     PersistentStorage [
         label = "{PersistentStorage|\l|\l}"
@@ -319,4 +319,41 @@ digraph g {
     ]
     
     Widget -> Render
+    
+    JSSyntaxAnalyser [
+        label = "{JSSyntaxAnalyser|\l|\l}"
+    ]
+    
+    JSLexicalAnalyser [
+        label = "{JSLexicalAnalyser|\l|\l}"
+    ]
+    
+    JSSemanticAnalyser [
+        label = "{JSSemanticAnalyser|\l|\l}"
+    ]
+    
+    JSOptimiser [
+        label = "{JSOptimiser|\l|\l}"
+    ]
+    
+    JSCompiler [
+        label = "{JSCompiler|\l|\l}"
+    ]
+    
+    JSExecutionEngine [
+        label = "{JSExecutionEngine|\l|\l}"
+    ]
+    
+    edge [
+        arrowhead = "open"
+        
+        headlabel = "1 "
+        taillabel = "1 "
+    ]
+    
+    JSCompiler -> JSOptimiser
+    JSCompiler -> JSSemanticAnalyser
+    JSCompiler -> JSLexicalAnalyser
+    JSCompiler -> JSSyntaxAnalyser
+    JSExecutionEngine -> JSCompiler
 }
