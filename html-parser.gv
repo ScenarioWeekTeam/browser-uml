@@ -25,7 +25,7 @@ digraph g {
         label = "{DOM|\l|\l}"
     ]
     
-    Entry [
+    DOMNode [
         label = "{Node|\l|\l}"
     ]
     
@@ -65,14 +65,14 @@ digraph g {
         arrowhead = "empty"
     ]
     
-    ElementNode -> Entry
-    TextNode -> Entry
-    CDataSectionNode -> Entry
-    ProcessingInstructionNode -> Entry
-    CommentNode -> Entry
-    DocumentNode -> Entry
-    DocumentTypeNode -> Entry
-    DocumentFragmentNode -> Entry
+    ElementNode -> DOMNode
+    TextNode -> DOMNode
+    CDataSectionNode -> DOMNode
+    ProcessingInstructionNode -> DOMNode
+    CommentNode -> DOMNode
+    DocumentNode -> DOMNode
+    DocumentTypeNode -> DOMNode
+    DocumentFragmentNode -> DOMNode
     
     edge [
         arrowhead = "ediamond"
@@ -81,8 +81,8 @@ digraph g {
         taillabel = "0..*"
     ]
     
-    Entry -> DOM
-    Entry -> Entry
+    DOMNode -> DOM
+    DOMNode -> DOMNode
     
     edge [
         arrowhead = "open"
@@ -93,5 +93,5 @@ digraph g {
     
     DOM -> Tokeniser
     DOM -> TreeConstructor
-    TreeConstructor -> Entry
+    TreeConstructor -> DOMNode
 }
