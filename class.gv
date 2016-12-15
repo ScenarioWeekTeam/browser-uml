@@ -306,4 +306,17 @@ digraph g {
     Render -> ViewPort
     Render -> Render
     CSSRuleTree -> CSSRuleTree
+    
+    Widget [
+        label = "{Widget|\l|\l}"
+    ]
+    
+    edge [
+        arrowhead = "ediamond"
+        
+        headlabel = "1 "
+        taillabel = "0..1 "
+    ]
+    
+    Widget -> Render
 }
