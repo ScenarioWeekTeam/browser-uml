@@ -16,6 +16,10 @@ digraph g {
     Tokeniser [
         label = "{Tokeniser|\l|\l}"
     ]
+    
+    TreeConstructor [
+        label = "{TreeConstructor|\l|\l}"
+    ]
 
     DOM [
         label = "{DOM|\l|\l}"
@@ -70,5 +74,13 @@ digraph g {
     DocumentTypeNode -> Entry
     DocumentFragmentNode -> Entry
     
+    edge [
+        arrowhead = "ediamond"
         
+        headlabel = "1 "
+        taillabel = "0..*"
+    ]
+    
+    Entry -> DOM
+    Entry -> Entry
 }
