@@ -1,0 +1,47 @@
+digraph g {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+
+   node [
+        fontname = "Bitstream Vera Sans"
+        fontsize = 8
+        shape = "record"
+    ]
+
+    edge [
+        fontname = "Bitstream Vera Sans"
+        fontsize = 8
+    ]
+
+    PersistentStorage [
+        label = "{PersistentStorage|\l|\l}"
+    ]
+    
+    LocalStorage [
+        label = "{LocalStorage|\l|\l}"
+    ]
+    
+    IndexedDB [
+        label = "{IndexedDB|\l|\l}"
+    ]
+    
+    WebSQL [
+        label = "{WebSQL|\l|\l}"
+    ]
+    
+    FileSystem [
+        label = "{FileSystem|\l|\l}"
+    ]
+    
+    edge [
+        arrowhead = "ediamond"
+        
+        headlabel = "1 "
+        taillabel = "0..*"
+    ]
+    
+    LocalStorage -> PersistentStorage
+    IndexedDB -> PersistentStorage
+    WebSQL -> PersistentStorage
+    FileSystem -> PersistentStorage
+}
