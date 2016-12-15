@@ -85,7 +85,7 @@ digraph g {
     Entry -> Entry
     
     edge [
-        arrowhead = "normal"
+        arrowhead = "open"
         
         headlabel = "1 "
         taillabel = "1 "

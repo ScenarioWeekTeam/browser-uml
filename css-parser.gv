@@ -55,4 +55,14 @@ digraph g {
     SyntaxAnalyser [
         label = "{Syntax Analyser|\l|\l}"
     ]
+    
+    edge [
+        arrowhead = "open"
+        
+        headlabel = "1 "
+        taillabel = "1 "
+    ]
+    
+    StyleSheet -> LexicalAnalyser
+    StyleSheet -> SyntaxAnalyser
 }
