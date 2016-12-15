@@ -356,4 +356,24 @@ digraph g {
     JSCompiler -> JSLexicalAnalyser
     JSCompiler -> JSSyntaxAnalyser
     JSExecutionEngine -> JSCompiler
+    Tab -> JSExecutionEngine
+    JSExecutionEngine -> RenderingEngine
+    
+    edge [
+        arrowhead = "open"
+        
+        headlabel = "1..* "
+        taillabel = "1 "
+    ]
+    
+    JSExecutionEngine -> StyleSheet
+    
+    edge [
+        arrowhead = "none"
+        
+        headlabel = "1 "
+        taillabel = "1 "
+    ]
+    
+    DOM -> JSExecutionEngine
 }
