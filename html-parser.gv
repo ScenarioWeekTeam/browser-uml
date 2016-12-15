@@ -1,0 +1,74 @@
+digraph g {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+
+   node [
+        fontname = "Bitstream Vera Sans"
+        fontsize = 8
+        shape = "record"
+    ]
+
+    edge [
+        fontname = "Bitstream Vera Sans"
+        fontsize = 8
+    ]
+
+    Tokeniser [
+        label = "{Tokeniser|\l|\l}"
+    ]
+
+    DOM [
+        label = "{DOM|\l|\l}"
+    ]
+    
+    Entry [
+        label = "{Node|\l|\l}"
+    ]
+    
+    ElementNode [
+        label = "{ElementNode|\l|\l}"
+    ]
+    
+    TextNode [
+        label = "{TextNode|\l|\l}"
+    ]
+    
+    CDataSectionNode [
+        label = "{CDataSectionNode|\l|\l}"
+    ]
+    
+    ProcessingInstructionNode [
+        label = "{ProcessingInstructionNode|\l|\l}"
+    ]
+    
+    CommentNode [
+        label = "{CommentNode|\l|\l}"
+    ]
+    
+    DocumentNode [
+        label = "{DocumentNode|\l|\l}"
+    ]
+    
+    DocumentTypeNode [
+        label = "{DocumentTypeNode|\l|\l}"
+    ]
+    
+    DocumentFragmentNode [
+        label = "{DocumentFragmentNode|\l|\l}"
+    ]
+    
+    edge [
+        arrowhead = "empty"
+    ]
+    
+    ElementNode -> Entry
+    TextNode -> Entry
+    CDataSectionNode -> Entry
+    ProcessingInstructionNode -> Entry
+    CommentNode -> Entry
+    DocumentNode -> Entry
+    DocumentTypeNode -> Entry
+    DocumentFragmentNode -> Entry
+    
+        
+}
