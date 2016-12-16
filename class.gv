@@ -22,11 +22,11 @@ digraph g {
     ]
 
     DOM [
-        label = "{DOM|\l|\l}"
+        label = "{DOM|- input : String\l- nodes : ArrayList\<Node\>\l- tokeniser : Tokeniser\l- treeConstructor : TreeConstructor\l|+ DOM(input : String)\l+ nodes() : ArrayList\<Node\>\l}"
     ]
     
     DOMNode [
-        label = "{Node|\l|\l}"
+        label = "{Node|- tag : String\l- attributes : HashMap\<String,String\>\l- children : ArrayList\<Node\>\l- data : String\l|+ Node(tag : String, attributes : HashMap\<String,String\>, children : ArrayList\<Node\>, data : String)\l+ getAttributes() : HashMap\<String,String\>\l+ setAttributes(attributes : HashMap\<String,String\>) : void\l+ getTag() : String\l+ setTag(tag : String) : void\l+ getData() : String\l+ setData(data : String) : void\l+ getChildren() : ArrayList\<Node\>\l+ setChildren(children : ArrayList\<Node\>) : void\l}"
     ]
 
     edge [
@@ -51,19 +51,19 @@ digraph g {
     TreeConstructor -> DOMNode
 
     StyleSheet [
-        label = "{StyleSheet|\l|\l}"
+        label = "{StyleSheet|- input : String\l- rules : ArrayList\<CSSRule\>\l- lexicalAnalyser : LexicalAnalyser\l- syntaxAnalyser : SyntaxAnalyser\l|+ StyleSheet(input : String)\l+ rules() : ArrayList\<CSSRule\>\l}"
     ]
     
     CSSRule [
-        label = "{CSSRule|\l|\l}"
+        label = "{CSSRule|- selectors : ArrayList\<Selector\>\l- declarations : ArrayList\<Declarations\>\l- specificity : Int\l- cascadeOrder : Int\l|+ CSSRule(selectors : ArrayList\<Selector\>, declarations : ArrayList\<Declarations\>)\l+ getCascadeOrder() : Int\l+ getSpecificity() : Int\l}"
     ]
     
     Selector [
-        label = "{Selector|\l|\l}"
+        label = "{Selector|- selector : String\l|+ Selector(selector : String)\l+ getSelector() : String}"
     ]
     
     Declaration [
-        label = "{Declaration|\l|\l}"
+        label = "{Declaration|- declaration : String\l|+ Declaration(declaration : String)\l+ getDeclaration() : String}"
     ]
     
     edge [
@@ -86,11 +86,11 @@ digraph g {
     Declaration -> CSSRule
     
     CSSLexicalAnalyser [
-        label = "{CSSLexicalAnalyser|\l|\l}"
+        label = "{CSSLexicalAnalyser|- input : ArrayList\<String\>\l- pos : Int\l- output : ArrayList\<CSSRule\>\l|+ CSSLexicalAnalyser(input : ArrayList\<String\>)\l+ output() : ArrayList\<CSSRule\>\l}"
     ]
     
     CSSSyntaxAnalyser [
-        label = "{CSSSyntaxAnalyser|\l|\l}"
+        label = "{CSSSyntaxAnalyser|- input : String\l- pos : Int\l- tokens : ArrayList\<String\>\l|+ CSSSyntaxAnalyser(input : String)\l+ tokens() : ArrayList\<String\>\l}"
     ]
     
     edge [
@@ -102,29 +102,42 @@ digraph g {
     
     StyleSheet -> CSSLexicalAnalyser
     StyleSheet -> CSSSyntaxAnalyser
+    
+    edge [
+        arrowhead = "open"
+        
+        headlabel = "* "
+        taillabel = "1 "
+    ]
+    
+    CSSLexicalAnalyser -> CSSRule
 
     PersistentStorage [
-        label = "{PersistentStorage|\l|\l}"
+        label = "{PersistentStorage|\l|+ PersistentStorage()\l+ clearStorage() : void\l}"
     ]
     
     LocalStorage [
-        label = "{LocalStorage|\l|\l}"
+        label = "{LocalStorage|- data : HashMap\<String, String\>\l|+ LocalStorage()\l+ addData(key : String, value : String) : Boolean\l+ removeData(key : String) : Boolean\l+ readData(key : String) : String\l}"
     ]
     
     IndexedDB [
-        label = "{IndexedDB|\l|\l}"
+        label = "{IndexedDB|- version : String\l|+ IndexedDB()\l+ getVersion() : String\l+ setVersion(version : String) : void\l+ transaction(objectStore : String, mode : String, key : String, action : String) : Boolean\l}"
     ]
     
     WebSQL [
-        label = "{WebSQL|\l|\l}"
+        label = "{WebSQL|\l|+ WebSQL()\l+ executeCommand(command : String) : void\l}"
     ]
     
     FileSystem [
-        label = "{FileSystem|\l|\l}"
+        label = "{FileSystem|\l|+ FileSystem()\l+ readFile(fileAddress : String) : File\l}"
+    ]
+    
+    File [
+        label = "{File|- name : String\l- dateModified : Date\l|+ File(fileAddress : String)\l+ readData() : String\l+ getName() : String\l+ getDateModified() : Date\l}"
     ]
     
     CookieStorage [
-        label = "{CookieStorage|\l|\l}"
+        label = "{CookieStorage|- cookies : ArrayList\<Cookie\>\l|+ CookieStorage()\l+ createCookie(name : String, value : String, attributes : HashMap\<String, String\>) : Cookie\l+ findCookie(name : String) : Cookie\l}"
     ]
     
     edge [
@@ -139,17 +152,18 @@ digraph g {
     WebSQL -> PersistentStorage
     FileSystem -> PersistentStorage
     CookieStorage -> PersistentStorage
+    File -> FileStorage
 
     Browser [
-        label = "{Browser|\l|\l}"
+        label = "{Browser|- Storage : PersistentStorage\l- interface : UserInterface\l|+ Browser()\l}"
     ]
     
     UserInterface [
-        label = "{UserInterface|\l|\l}"
+        label = "{UserInterface|\l|+ UserInterface()\l- newWindow() : Tab\lcloseWindow(window : Tab) : void\l}"
     ]
     
     Tab [
-        label = "{Tab|\l|\l}"
+        label = "{Tab|- address : String\l- back : Stack\<String\>\l- forwards : Stack\<String\>\l|+ Tab()\l+ navigate(url : String) : void\l+ back() : void\l+ forwards() : void\l+ refresh() : void\l+stopRefresh() : void\l}"
     ]
     
     edge [
@@ -194,6 +208,7 @@ digraph g {
     ]
     
     HTTPClient -> HTTPObject
+    JSExecutionEngine -> File
     
     edge [
         arrowhead = "open"
@@ -240,7 +255,7 @@ digraph g {
     ]
     
     RenderingEngine [
-        label = "{RenderingEngine|- stylesheets : ArrayList\<Stylesheet\>\l- document : DOM\l|+ RenderingEngine(Document : DOM, styles : ArrayList\<StyleSheet\>)\l+ layout() : void\l+ paint() : void\l+ update() : void\l}"
+        label = "{RenderingEngine|- stylesheets : ArrayList\<Stylesheet\>\l- document : DOM\l- classes : HashMap\<String, CSSRule\>\l- ids : HashMap\<String, CSSRule\>\l- tags : HashMap\<String, CSSRule\>\l|+ RenderingEngine(Document : DOM, styles : ArrayList\<StyleSheet\>)\l+ layout() : void\l+ paint() : void\l+ update() : void\l}"
     ]
     
     CSSRuleTree [
@@ -259,7 +274,6 @@ digraph g {
     Style -> ViewPort
     DOMNode -> ViewPort
     Style -> Render
-    DOMNode -> Render
     CSSRuleTree -> RenderingEngine
     
     edge [
@@ -344,6 +358,15 @@ digraph g {
     
     DOM -> JSExecutionEngine
     UserInterface -> Browser
+    
+    edge [
+        arrowhead = "none"
+        
+        headlabel = "0..1 "
+        taillabel = "1 "
+    ]
+    
+    DOMNode -> Render
     
     edge [
         arrowhead = "open"
