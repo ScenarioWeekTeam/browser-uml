@@ -1,0 +1,30 @@
+@startuml
+package "Page" {
+  [CSS] as css
+  [Javascript] as js
+  [HTML] as html
+  [Rendering] as render
+}
+
+package "Core Browser" {
+  [Storage] as storage
+  [Browser] as browser
+  [Networking] as http
+}
+
+render ..>css
+render ..>html
+js -->html
+js ..>css
+js ..>render
+browser -->storage
+browser -->http
+browser -->render
+browser ..>js
+browser ..>css
+browser ..>html
+html ..>http
+js ..>http
+js ..>storage
+
+@enduml
