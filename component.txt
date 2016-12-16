@@ -7,7 +7,7 @@ package "Browser" {
     [Rendering] as render
   }
 
-  package "Core Browser" {
+  package "Core" {
     [Storage] as storage
     [Browser] as browser
     [Networking] as http
