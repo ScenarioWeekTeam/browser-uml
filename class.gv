@@ -18,15 +18,19 @@ digraph g {
     ]
     
     TreeConstructor [
-        label = "{TreeConstructor|- input : ArrayList\<String\>\l- pos : Int\l|+ TreeConstructor(input : ArrayList\<String\>\l+ Tree() : Node\l}"
+        label = "{TreeConstructor|- input : ArrayList\<String\>\l- pos : Int\l+ tree : Node\l|+ TreeConstructor(input : ArrayList\<String\>\l+ Tree() : Node\l}"
     ]
-
+    
+    SpeculativeParser [
+        label = "{SpeculativeParser|- input : ArrayList\<String\>\l- pos : Int\l- httpClient : HTTPClient|+ SpeculativeParser(input : ArrayList\<String\>\l}"
+    ]
+    
     DOM [
-        label = "{DOM|- input : String\l- nodes : ArrayList\<Node\>\l- tokeniser : Tokeniser\l- treeConstructor : TreeConstructor\l|+ DOM(input : String)\l+ nodes() : ArrayList\<Node\>\l}"
+        label = "{DOM|- input : String\l- nodes : ArrayList\<Node\>\l- tokeniser : Tokeniser\l- treeConstructor : TreeConstructor\l|+ DOM(input : String)\l+ nodes() : ArrayList\<Node\>\l+ pauseParsing() : void\l}"
     ]
     
     DOMNode [
-        label = "{Node|- tag : String\l- attributes : HashMap\<String,String\>\l- children : ArrayList\<Node\>\l- data : String\l|+ Node(tag : String, attributes : HashMap\<String,String\>, children : ArrayList\<Node\>, data : String)\l+ getAttributes() : HashMap\<String,String\>\l+ setAttributes(attributes : HashMap\<String,String\>) : void\l+ getTag() : String\l+ setTag(tag : String) : void\l+ getData() : String\l+ setData(data : String) : void\l+ getChildren() : ArrayList\<Node\>\l+ setChildren(children : ArrayList\<Node\>) : void\l}"
+        label = "{Node|- tag : String\l- attributes : HashMap\<String,String\>\l- children : ArrayList\<Node\>\l- data : String\l|+ Node(tag : String, attributes : HashMap\<String,String\>, children : ArrayList\<Node\>, data : String)\l+ getAttributes() : HashMap\<String,String\>\l+ setAttributes(attributes : HashMap\<String,String\>) : void\l+ getTag() : String\l+ setTag(tag : String) : void\l+ getData() : String\l+ setData(data : String) : void\l+ getChildren() : ArrayList\<Node\>\l+ setChildren(children : ArrayList\<Node\>) : void\l+ pauseParsing() : void\l}"
     ]
 
     edge [
@@ -46,12 +50,14 @@ digraph g {
         taillabel = "1 "
     ]
     
+    SpeculativeParser -> HTTPClient
+    DOM -> SpeculativeParser
     DOM -> Tokeniser
     DOM -> TreeConstructor
     TreeConstructor -> DOMNode
 
     StyleSheet [
-        label = "{StyleSheet|- input : String\l- rules : ArrayList\<CSSRule\>\l- lexicalAnalyser : LexicalAnalyser\l- syntaxAnalyser : SyntaxAnalyser\l|+ StyleSheet(input : String)\l+ rules() : ArrayList\<CSSRule\>\l}"
+        label = "{StyleSheet|- input : String\l- rules : ArrayList\<CSSRule\>\l- lexicalAnalyser : LexicalAnalyser\l- syntaxAnalyser : SyntaxAnalyser\l|+ StyleSheet(input : String)\l+ rules() : ArrayList\<CSSRule\>\l+ parsed() : Boolean\l}"
     ]
     
     CSSRule [
@@ -152,7 +158,7 @@ digraph g {
     WebSQL -> PersistentStorage
     FileSystem -> PersistentStorage
     CookieStorage -> PersistentStorage
-    File -> FileStorage
+    File -> FileSystem
 
     Browser [
         label = "{Browser|- Storage : PersistentStorage\l- interface : UserInterface\l|+ Browser()\l}"
@@ -174,6 +180,16 @@ digraph g {
     ]
     
     Tab -> Browser
+    JSNode -> JSNode
+    
+    edge [
+        arrowhead = "ediamond"
+        
+        headlabel = "1 "
+        taillabel = "0..1"
+    ]
+    
+    JSNode -> JSCompiler
     
     edge [
         arrowhead = "open"
@@ -181,6 +197,10 @@ digraph g {
         headlabel = "1 "
         taillabel = "1 "
     ]
+    
+    JSOptimiser -> JSNode
+    JSSyntaxAnalyser -> JSNode
+    JSSemanticAnalyser -> JSNode
     
     HTTPClient [
         label = "{HTTPClient|- connection : URLConnection\l|+ HTTPClient()\l+ httpRequest(method : String, cookies : ArrayList\<Cookie\>, headers : HashMap\<String, String\>, Data : DataOutputStream) : HTTPObject\l}"
@@ -302,27 +322,31 @@ digraph g {
     Widget -> Render
     
     JSSyntaxAnalyser [
-        label = "{JSSyntaxAnalyser|\l|\l}"
+        label = "{JSSyntaxAnalyser|- input : ArrayList\<String\>\l- pos : Int\l- output : JSNode\l|+ JSSyntaxAnalyser(input : ArrayList\<String\>)\l+ output() : JSNode\l}"
     ]
     
     JSLexicalAnalyser [
-        label = "{JSLexicalAnalyser|\l|\l}"
+        label = "{JSLexicalAnalyser|- input : String\l- pos : Int\l- tokens : ArrayList\<String\>\l|+ JSLexicalAnalyser(input : String)\l+ tokens() : ArrayList\<String\>\l}"
     ]
     
     JSSemanticAnalyser [
-        label = "{JSSemanticAnalyser|\l|\l}"
+        label = "{JSSemanticAnalyser|- input : JSNode\l|+ JSSemanticAnalyser(input : JSNode)\l- output() : JSNode\l}"
     ]
     
     JSOptimiser [
-        label = "{JSOptimiser|\l|\l}"
+        label = "{JSOptimiser|- input : JSNode\l|+ JSOptimiser(input : JSNode)\l- output() : JSNode\l}"
     ]
     
     JSCompiler [
-        label = "{JSCompiler|\l|\l}"
+        label = "{JSCompiler|- input : String\l- optimiser : JSOptimiser\l- lexicalAnalyser : JSLexicalAnalyser\l- syntaxAnalyser : JSSyntaxAnalyser\l- semanticAnalyser : JSSemanticAnalyser\l|+ JSCompiler(input : String)\l+ output() : ByteCode\l}"
     ]
     
     JSExecutionEngine [
-        label = "{JSExecutionEngine|\l|\l}"
+        label = "{JSExecutionEngine|- code : ByteCode\l|+ JSExecutionEngine(ByteCode)\l+ addByteCode(code : ByteCode) : void\l+ call(function : String) : void\l}"
+    ]
+    
+    JSNode [
+        label = "{JSExecutionEngine|- scope : String\l- object : String\l- expression : String\l- variable : String\l- type : String\l- children : ArrayList\<JSNode\>\l|+ JSNode(expression : String, variable : String, children : ArrayList\<JSNode\>)\l+ addScope(scope : String) : void\l+ addObject(object : String) : void\l+ addType(type : String) : void\l+ getChildren() : ArrayList\<JSNode\>\l+ getScope() : String\l+ getObject() : String\l+ getExpression() : String\l+ getVariable() : String\l}"
     ]
     
     edge [
@@ -332,6 +356,8 @@ digraph g {
         taillabel = "1 "
     ]
     
+    DOM -> JSCompiler
+    JSExecutionEngine -> DOM
     JSCompiler -> JSOptimiser
     JSCompiler -> JSSemanticAnalyser
     JSCompiler -> JSLexicalAnalyser
@@ -356,7 +382,6 @@ digraph g {
         taillabel = "1 "
     ]
     
-    DOM -> JSExecutionEngine
     UserInterface -> Browser
     
     edge [
