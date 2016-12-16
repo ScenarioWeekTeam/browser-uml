@@ -1,0 +1,52 @@
+Title: Loading a web page
+UserInterface->Tab: navigate()
+Tab->HTTPClient: httpRequest()
+HTTPClient-->Tab: HTTPObject
+Tab->DOM: DOM()
+DOM->Tokeniser: Tokeniser()
+DOM->Tokeniser: tokens()
+Tokeniser-->DOM: ArrayList<String>
+DOM->TreeConstructor: TreeConstructor()
+DOM->TreeConstructor: tree()
+TreeConstructor->DOM: javascript()
+DOM->JSCompiler: JSCompiler()
+DOM->SpeculativeParser: SpeculativeParser()
+SpeculativeParser->HTTPClient: httpRequest()
+JSCompiler->JSLexicalAnalyser: JSLexicalAnalyser()
+JSCompiler->JSLexicalAnalyser: tokens()
+JSLexicalAnalyser-->JSCompiler: ArrayList<String>
+JSCompiler->JSSyntaxAnalyser: JSSyntaxAnalyser()
+JSCompiler->JSSyntaxAnalyser: output()
+JSSyntaxAnalyser-->JSCompiler: JSNode
+JSCompiler->JSSemanticAnalyser: JSSemanticAnalyser()
+JSCompiler->JSSemanticAnalyser: output()
+JSSemanticAnalyser-->JSCompiler: JSNode
+JSCompiler->JSOptimiser: JSOptimiser()
+JSCompiler->JSOptimiser: output()
+JSOptimiser-->JSCompiler: JSNode
+JSCompiler->JSExecutionEngine: JSExecutionEngine()
+JSCompiler-->DOM: void
+DOM->TreeConstructor: resume()
+TreeConstructor-->DOM: Node
+DOM-->Tab: void
+Tab->StyleSheet: StyleSheet()
+StyleSheet->CSSLexicalAnalyser: CSSLexicalAnalyser()
+StyleSheet->CSSLexicalAnalyser: output()
+CSSLexicalAnalyser-->StyleSheet: ArrayList<String>
+StyleSheet->CSSSyntaxAnalyser: CSSSyntaxAnalyser()
+StyleSheet->CSSSyntaxAnalyser: output()
+CSSSyntaxAnalyser-->StyleSheet: ArrayList<CSSRule>
+StyleSheet-->Tab: StyleSheet
+Tab->RenderingEngine: RenderingEngine()
+RenderingEngine->CSSRuleTree: CSSRuleTree()
+RenderingEngine->ViewPort: ViewPort()
+ViewPort-->RenderingEngine: ViewPort
+RenderingEngine->ViewPort: layout()
+ViewPort-->RenderingEngine: void
+RenderingEngine->ViewPort: paint()
+ViewPort-->RenderingEngine: void
+RenderingEngine-->Tab: void
+Tab-->UserInterface: void
+
+
+
