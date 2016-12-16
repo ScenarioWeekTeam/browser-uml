@@ -14,11 +14,11 @@ digraph g {
     ]
 
     Tokeniser [
-        label = "{Tokeniser|- input : String\l- pos : Int\l- Tokens : ArrayList\<String\>\l|+ Tokeniser(input : String)\l+ Tokens() : ArrayList\<String\>\l}"
+        label = "{Tokeniser|- input : String\l- pos : Int\l- Tokens : ArrayList\<String\>\l|+ Tokeniser(input : String)\l+ tokens() : ArrayList\<String\>\l}"
     ]
     
     TreeConstructor [
-        label = "{TreeConstructor|- input : ArrayList\<String\>\l- pos : Int\l+ tree : Node\l|+ TreeConstructor(input : ArrayList\<String\>\l+ Tree() : Node\l}"
+        label = "{TreeConstructor|- input : ArrayList\<String\>\l- pos : Int\l+ tree : Node\l|+ TreeConstructor(input : ArrayList\<String\>\l+ tree() : Node\l+ resume() :\l}"
     ]
     
     SpeculativeParser [
@@ -26,7 +26,7 @@ digraph g {
     ]
     
     DOM [
-        label = "{DOM|- input : String\l- nodes : ArrayList\<Node\>\l- tokeniser : Tokeniser\l- treeConstructor : TreeConstructor\l|+ DOM(input : String)\l+ nodes() : ArrayList\<Node\>\l+ pauseParsing() : void\l}"
+        label = "{DOM|- input : String\l- nodes : ArrayList\<Node\>\l- tokeniser : Tokeniser\l- treeConstructor : TreeConstructor\l|+ DOM(input : String)\l+ nodes() : ArrayList\<Node\>\l+ javascript(javascript : String) : void\l}"
     ]
     
     DOMNode [
@@ -51,6 +51,7 @@ digraph g {
     ]
     
     SpeculativeParser -> HTTPClient
+    TreeConstructor -> HTTPClient
     DOM -> SpeculativeParser
     DOM -> Tokeniser
     DOM -> TreeConstructor
@@ -92,11 +93,11 @@ digraph g {
     Declaration -> CSSRule
     
     CSSLexicalAnalyser [
-        label = "{CSSLexicalAnalyser|- input : ArrayList\<String\>\l- pos : Int\l- output : ArrayList\<CSSRule\>\l|+ CSSLexicalAnalyser(input : ArrayList\<String\>)\l+ output() : ArrayList\<CSSRule\>\l}"
+        label = "{CSSSyntaxAnalyser|- input : ArrayList\<String\>\l- pos : Int\l- output : ArrayList\<CSSRule\>\l|+ CSSLexicalAnalyser(input : ArrayList\<String\>)\l+ output() : ArrayList\<CSSRule\>\l}"
     ]
     
     CSSSyntaxAnalyser [
-        label = "{CSSSyntaxAnalyser|- input : String\l- pos : Int\l- tokens : ArrayList\<String\>\l|+ CSSSyntaxAnalyser(input : String)\l+ tokens() : ArrayList\<String\>\l}"
+        label = "{CSSLexicalAnalyser|- input : String\l- pos : Int\l- tokens : ArrayList\<String\>\l|+ CSSSyntaxAnalyser(input : String)\l+ tokens() : ArrayList\<String\>\l}"
     ]
     
     edge [
@@ -116,6 +117,7 @@ digraph g {
         taillabel = "1 "
     ]
     
+    RenderingEngine -> Render
     CSSLexicalAnalyser -> CSSRule
 
     PersistentStorage [
@@ -263,11 +265,11 @@ digraph g {
     StyleSheet -> Tab
     
     ViewPort [
-        label = "{ViewPort|- node : Node\l- style : Style\l- height : Int\l- width : Int\l- dirtyBit : Boolean\l|+ ViewPort(node : Node, style : Style)\l+ dirty() : void\l+ height() : Int\l width() : Int\l}"
+        label = "{ViewPort|- node : Node\l- style : Style\l- height : Int\l- width : Int\l- dirtyBit : Boolean\l- children : ArrayList\<Render\>\l|+ ViewPort(node : Node, style : Style, children : ArrayList\<Render\>)\l+ dirty() : void\l+ height() : Int\l width() : Int\l+ getChildren() : ArrayList\<Render\>\l+ layout() : void\l+ paint() : void\l}"
     ]
     
     Render [
-        label = "{Render|- node : Node\l- style : Style\l- containingLayer : Int\l- height : Int\l- width : Int\l- dirtyBit : Boolean\l|+ Render(node : Node, style : Style, layer: Int)\l+ dirty() : void\l+ height() : Int\l width() : Int\l+ layer() : Int\l}"
+        label = "{Render|- node : Node\l- style : Style\l- containingLayer : Int\l- height : Int\l- width : Int\l- dirtyBit : Boolean\l- children : ArrayList\<Render\>\l|+ Render(node : Node, style : Style, layer: Int, children : ArrayList\<Render\>)\l+ dirty() : void\l+ height() : Int\l width() : Int\l+ layer() : Int\l+ getChildren() : ArrayList\<Render\>\l+ layout() : void\l+ paint() : void\l}"
     ]
     
     Style [
@@ -309,7 +311,7 @@ digraph g {
     CSSRuleTree -> CSSRuleTree
     
     Widget [
-        label = "{Widget|- type : String\l- position : Tuple\<Int,Int,Int\>\l- rotation : Int\l|+ Widget(type : String, position : Tuple\<Int,Int,Int\>, rotation : Int)\l+ setPosition(position : Tuple\<Int,Int,Int\>) : void\l+ setRotation(rotation : Int) : void\l+ paint() : void\l}"
+        label = "{Widget|- type : String\l- position : Tuple\<Int,Int,Int\>\l- rotation : Int\l- size : Tuple\<Int,Int\>\l|+ Widget(type : String, position : Tuple\<Int,Int,Int\>, rotation : Int)\l+ setPosition(position : Tuple\<Int,Int,Int\>) : void\l+ setRotation(rotation : Int) : void\l+ setSize(size Tuple\<Int,Int\>) : void\l+ paint() : void\l}"
     ]
     
     edge [
