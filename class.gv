@@ -18,11 +18,11 @@ digraph g {
     ]
     
     TreeConstructor [
-        label = "{TreeConstructor|- input : ArrayList\<String\>\l- pos : Int\l+ tree : Node\l|+ TreeConstructor(input : ArrayList\<String\>\l+ tree() : Node\l+ resume() :\l}"
+        label = "{TreeConstructor|- input : ArrayList\<String\>\l- pos : Int\l- tree : Node\l|+ TreeConstructor(input : ArrayList\<String\>\l+ tree() : Node\l+ resume() : void\l}"
     ]
     
     SpeculativeParser [
-        label = "{SpeculativeParser|- input : ArrayList\<String\>\l- pos : Int\l- httpClient : HTTPClient|+ SpeculativeParser(input : ArrayList\<String\>\l}"
+        label = "{SpeculativeParser|- input : ArrayList\<String\>\l- pos : Int\l- httpClient : HTTPClient\l|+ SpeculativeParser(input : ArrayList\<String\>\l}"
     ]
     
     DOM [
@@ -66,11 +66,11 @@ digraph g {
     ]
     
     Selector [
-        label = "{Selector|- selector : String\l|+ Selector(selector : String)\l+ getSelector() : String}"
+        label = "{Selector|- selector : String\l|+ Selector(selector : String)\l+ getSelector() : String\l}"
     ]
     
     Declaration [
-        label = "{Declaration|- declaration : String\l|+ Declaration(declaration : String)\l+ getDeclaration() : String}"
+        label = "{Declaration|- declaration : String\l|+ Declaration(declaration : String)\l+ getDeclaration() : String\l}"
     ]
     
     edge [
@@ -167,7 +167,7 @@ digraph g {
     ]
     
     UserInterface [
-        label = "{UserInterface|\l|+ UserInterface()\l- newWindow() : Tab\lcloseWindow(window : Tab) : void\l}"
+        label = "{UserInterface|\l|+ UserInterface()\l- newWindow() : Tab\l- closeWindow(window : Tab) : void\l}"
     ]
     
     Tab [
@@ -209,7 +209,7 @@ digraph g {
     ]
     
     HTTPObject [
-        label = "{HTTPObject|- cookies: ArrayList\<Cookie\>\l- headers : HashMap\<String, String\>\l- Data : DataInputStream\l|+ HTTPObject(cookies : ArrayList\<Cookie\>, headers : HashMap\<String, String\>, Data : DataInputStream)\l+ getCookies() : ArrayList\<Cookie\>\l+ getHeaders() : HashMap\<String, String\>\l getData() : DataInputStream\l}"
+        label = "{HTTPObject|- cookies: ArrayList\<Cookie\>\l- headers : HashMap\<String, String\>\l- Data : DataInputStream\l|+ HTTPObject(cookies : ArrayList\<Cookie\>, headers : HashMap\<String, String\>, Data : DataInputStream)\l+ getCookies() : ArrayList\<Cookie\>\l+ getHeaders() : HashMap\<String, String\>\l+ getData() : DataInputStream\l}"
     ]
     
     edge [
@@ -265,15 +265,15 @@ digraph g {
     StyleSheet -> Tab
     
     ViewPort [
-        label = "{ViewPort|- node : Node\l- style : Style\l- height : Int\l- width : Int\l- dirtyBit : Boolean\l- children : ArrayList\<Render\>\l|+ ViewPort(node : Node, style : Style, children : ArrayList\<Render\>)\l+ dirty() : void\l+ height() : Int\l width() : Int\l+ getChildren() : ArrayList\<Render\>\l+ layout() : void\l+ paint() : void\l}"
+        label = "{ViewPort|- node : Node\l- style : Style\l- height : Int\l- width : Int\l- dirtyBit : Boolean\l- children : ArrayList\<Render\>\l|+ ViewPort(node : Node, style : Style, children : ArrayList\<Render\>)\l+ dirty() : void\l+ height() : Int\l+ width() : Int\l+ getChildren() : ArrayList\<Render\>\l+ layout() : void\l+ paint() : void\l}"
     ]
     
     Render [
-        label = "{Render|- node : Node\l- style : Style\l- containingLayer : Int\l- height : Int\l- width : Int\l- dirtyBit : Boolean\l- children : ArrayList\<Render\>\l|+ Render(node : Node, style : Style, layer: Int, children : ArrayList\<Render\>)\l+ dirty() : void\l+ height() : Int\l width() : Int\l+ layer() : Int\l+ getChildren() : ArrayList\<Render\>\l+ layout() : void\l+ paint() : void\l}"
+        label = "{Render|- node : Node\l- style : Style\l- containingLayer : Int\l- height : Int\l- width : Int\l- dirtyBit : Boolean\l- children : ArrayList\<Render\>\l|+ Render(node : Node, style : Style, layer: Int, children : ArrayList\<Render\>)\l+ dirty() : void\l+ height() : Int\l+ width() : Int\l+ layer() : Int\l+ getChildren() : ArrayList\<Render\>\l+ layout() : void\l+ paint() : void\l}"
     ]
     
     Style [
-        label = "{Style|- declarations : ArrayList\<Declaration\>\l|+ Style(declarations : ArrayList\<Declaration\>)\l+ getStyle() : ArrayList\<Declaration\>}"
+        label = "{Style|- declarations : ArrayList\<Declaration\>\l|+ Style(declarations : ArrayList\<Declaration\>)\l+ getStyle() : ArrayList\<Declaration\>\l}"
     ]
     
     RenderingEngine [
@@ -281,7 +281,7 @@ digraph g {
     ]
     
     CSSRuleTree [
-        label = "{CSSRuleTree|- selectors : ArrayList\<Selector\>\l- declarations : ArrayList\<Declaration\>\l|+ CSSRuleTree(selectors : ArrayList\<Selector\>\linput : ArrayList\<StyleSheet\>)\l+ findRules(selectors : ArrayList\<Selectors\>) : CSSRuleTree\l+ getRules() : ArrayList\<Declarations\>\l}"
+        label = "{CSSRuleTree|- selectors : ArrayList\<Selector\>\l- declarations : ArrayList\<Declaration\>\l|+ CSSRuleTree(selectors : ArrayList\<Selector\>, declarations : ArrayList\<Declaration\>)\l+ findRules(selectors : ArrayList\<Selectors\>) : CSSRuleTree\l+ getRules() : ArrayList\<Declarations\>\l}"
     ]
     
     edge [
@@ -332,11 +332,11 @@ digraph g {
     ]
     
     JSSemanticAnalyser [
-        label = "{JSSemanticAnalyser|- input : JSNode\l|+ JSSemanticAnalyser(input : JSNode)\l- output() : JSNode\l}"
+        label = "{JSSemanticAnalyser|- input : JSNode\l|+ JSSemanticAnalyser(input : JSNode)\l+ output() : JSNode\l}"
     ]
     
     JSOptimiser [
-        label = "{JSOptimiser|- input : JSNode\l|+ JSOptimiser(input : JSNode)\l- output() : JSNode\l}"
+        label = "{JSOptimiser|- input : JSNode\l|+ JSOptimiser(input : JSNode)\l+ output() : JSNode\l}"
     ]
     
     JSCompiler [
