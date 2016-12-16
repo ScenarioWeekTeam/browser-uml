@@ -93,11 +93,11 @@ digraph g {
     Declaration -> CSSRule
     
     CSSLexicalAnalyser [
-        label = "{CSSSyntaxAnalyser|- input : ArrayList\<String\>\l- pos : Int\l- output : ArrayList\<CSSRule\>\l|+ CSSLexicalAnalyser(input : ArrayList\<String\>)\l+ output() : ArrayList\<CSSRule\>\l}"
+        label = "{CSSSyntaxAnalyser|- input : ArrayList\<String\>\l- pos : Int\l- output : ArrayList\<CSSRule\>\l|+ CSSSyntaxAnalyser(input : ArrayList\<String\>)\l+ output() : ArrayList\<CSSRule\>\l}"
     ]
     
     CSSSyntaxAnalyser [
-        label = "{CSSLexicalAnalyser|- input : String\l- pos : Int\l- tokens : ArrayList\<String\>\l|+ CSSSyntaxAnalyser(input : String)\l+ tokens() : ArrayList\<String\>\l}"
+        label = "{CSSLexicalAnalyser|- input : String\l- pos : Int\l- tokens : ArrayList\<String\>\l|+ CSSLexicalAnalyser(input : String)\l+ tokens() : ArrayList\<String\>\l}"
     ]
     
     edge [
@@ -348,7 +348,7 @@ digraph g {
     ]
     
     JSNode [
-        label = "{JSExecutionEngine|- scope : String\l- object : String\l- expression : String\l- variable : String\l- type : String\l- children : ArrayList\<JSNode\>\l|+ JSNode(expression : String, variable : String, children : ArrayList\<JSNode\>)\l+ addScope(scope : String) : void\l+ addObject(object : String) : void\l+ addType(type : String) : void\l+ getChildren() : ArrayList\<JSNode\>\l+ getScope() : String\l+ getObject() : String\l+ getExpression() : String\l+ getVariable() : String\l}"
+        label = "{JSNode|- scope : String\l- object : String\l- expression : String\l- variable : String\l- type : String\l- children : ArrayList\<JSNode\>\l|+ JSNode(expression : String, variable : String, children : ArrayList\<JSNode\>)\l+ addScope(scope : String) : void\l+ addObject(object : String) : void\l+ addType(type : String) : void\l+ getChildren() : ArrayList\<JSNode\>\l+ getScope() : String\l+ getObject() : String\l+ getExpression() : String\l+ getVariable() : String\l}"
     ]
     
     edge [
