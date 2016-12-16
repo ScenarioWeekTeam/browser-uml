@@ -14,11 +14,11 @@ digraph g {
     ]
 
     Tokeniser [
-        label = "{Tokeniser|\l|\l}"
+        label = "{Tokeniser|- input : String\l- pos : Int\l- Tokens : ArrayList\<String\>\l|+ Tokeniser(input : String)\l+ Tokens() : ArrayList\<String\>\l}"
     ]
     
     TreeConstructor [
-        label = "{TreeConstructor|\l|\l}"
+        label = "{TreeConstructor|- input : ArrayList\<String\>\l- pos : Int\l|+ TreeConstructor(input : ArrayList\<String\>\l+ Tree() : Node\l}"
     ]
 
     DOM [
@@ -168,14 +168,12 @@ digraph g {
         taillabel = "1 "
     ]
     
-    Browser -> UserInterface
-    
     HTTPClient [
-        label = "{HTTPClient|\l|\l}"
+        label = "{HTTPClient|- connection : URLConnection\l|+ HTTPClient()\l+ httpRequest(method : String, cookies : ArrayList\<Cookie\>, headers : HashMap\<String, String\>, Data : DataOutputStream) : HTTPObject\l}"
     ]
     
     HTTPObject [
-        label = "{HTTPObject|\l|\l}"
+        label = "{HTTPObject|- cookies: ArrayList\<Cookie\>\l- headers : HashMap\<String, String\>\l- Data : DataInputStream\l|+ HTTPObject(cookies : ArrayList\<Cookie\>, headers : HashMap\<String, String\>, Data : DataInputStream)\l+ getCookies() : ArrayList\<Cookie\>\l+ getHeaders() : HashMap\<String, String\>\l getData() : DataInputStream\l}"
     ]
     
     edge [
@@ -198,6 +196,19 @@ digraph g {
     HTTPClient -> HTTPObject
     
     edge [
+        arrowhead = "open"
+        
+        headlabel = "1 "
+        taillabel = "1 "
+    ]
+    
+    HTTPObject -> CookieStorage
+    JSExecutionEngine -> LocalStorage
+    JSExecutionEngine -> WebSQL
+    JSExecutionEngine -> IndexedDB
+    JSExecutionEngine -> CookieStorage
+    
+    edge [
         arrowhead = "ediamond"
         
         headlabel = "1 "
@@ -217,23 +228,23 @@ digraph g {
     StyleSheet -> Tab
     
     ViewPort [
-        label = "{ViewPort|\l|\l}"
+        label = "{ViewPort|- node : Node\l- style : Style\l- height : Int\l- width : Int\l- dirtyBit : Boolean\l|+ ViewPort(node : Node, style : Style)\l+ dirty() : void\l+ height() : Int\l width() : Int\l}"
     ]
     
     Render [
-        label = "{Render|\l|\l}"
+        label = "{Render|- node : Node\l- style : Style\l- containingLayer : Int\l- height : Int\l- width : Int\l- dirtyBit : Boolean\l|+ Render(node : Node, style : Style, layer: Int)\l+ dirty() : void\l+ height() : Int\l width() : Int\l+ layer() : Int\l}"
     ]
     
     Style [
-        label = "{Style|\l|\l}"
+        label = "{Style|- declarations : ArrayList\<Declaration\>\l|+ Style(declarations : ArrayList\<Declaration\>)\l+ getStyle() : ArrayList\<Declaration\>}"
     ]
     
     RenderingEngine [
-        label = "{RenderingEngine|\l|\l}"
+        label = "{RenderingEngine|- stylesheets : ArrayList\<Stylesheet\>\l- document : DOM\l|+ RenderingEngine(Document : DOM, styles : ArrayList\<StyleSheet\>)\l+ layout() : void\l+ paint() : void\l+ update() : void\l}"
     ]
     
     CSSRuleTree [
-        label = "{CSSRuleTree|\l|\l}"
+        label = "{CSSRuleTree|- selectors : ArrayList\<Selector\>\l- declarations : ArrayList\<Declaration\>\l|+ CSSRuleTree(selectors : ArrayList\<Selector\>\linput : ArrayList\<StyleSheet\>)\l+ findRules(selectors : ArrayList\<Selectors\>) : CSSRuleTree\l+ getRules() : ArrayList\<Declarations\>\l}"
     ]
     
     edge [
@@ -258,12 +269,13 @@ digraph g {
         taillabel = "0..* "
     ]
     
+    Cookie -> CookieStorage
     Render -> ViewPort
     Render -> Render
     CSSRuleTree -> CSSRuleTree
     
     Widget [
-        label = "{Widget|\l|\l}"
+        label = "{Widget|- type : String\l- position : Tuple\<Int,Int,Int\>\l- rotation : Int\l|+ Widget(type : String, position : Tuple\<Int,Int,Int\>, rotation : Int)\l+ setPosition(position : Tuple\<Int,Int,Int\>) : void\l+ setRotation(rotation : Int) : void\l+ paint() : void\l}"
     ]
     
     edge [
@@ -331,4 +343,20 @@ digraph g {
     ]
     
     DOM -> JSExecutionEngine
+    UserInterface -> Browser
+    
+    edge [
+        arrowhead = "open"
+        
+        headlabel = "0..* "
+        taillabel = "1 "
+    ]
+    
+    HTTPObject -> Cookie
+    JSExecutionEngine -> Cookie
+    UserInterface -> Tab
+    
+    Cookie [
+        label = "{Cookie|- name : String\l- value : String\l- attributes : HashMap\<String, String\>\l- expiry : Date\l|+ getName() : String\l+ getValue() : String\l+ getAttributes() : HashMap\<String, String\>\l+ destroy() : void\l}"
+    ]
 }
